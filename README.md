@@ -1,6 +1,6 @@
-<h1>Webstore </h1>
+#Webstore 
 
-<h2>Technologies</h2>
+##Technologies
 -Java
 -Spring Boot MVC
 -Hibernate
@@ -8,4 +8,4 @@
 -Maven
 -Thymeleaf
 
-<p>Project is not finisched yet.</p>
+######Project is not finisched yet.
