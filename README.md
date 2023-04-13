@@ -1,6 +1,6 @@
-#Webstore 
+# Webstore 
 
-##Technologies
+## Technologies
 -Java
 -Spring Boot MVC
 -Hibernate
@@ -8,4 +8,4 @@
 -Maven
 -Thymeleaf
 
-######Project is not finisched yet.
+###### Project is not finisched yet.
