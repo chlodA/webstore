@@ -13,9 +13,9 @@ public class ProductServiceImpl implements ProductService {
 @Autowired
     private ProductRepository productRepository;
 
-  /*  public ProductServiceImpl(ProductRepository productRepository){
+    public ProductServiceImpl(ProductRepository productRepository){
         this.productRepository = productRepository;
-    }*/
+    }
 
     public List<Product> getProducts(){
         return productRepository.findAll();
@@ -25,9 +25,14 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findByIdAndActive(id,true).orElseThrow(NotFoundException::new);
     }*/
 
-    @Override
+  /*  @Override
     public void addProduct(Product product) {
         this.productRepository.save(product);
+    }*/
+
+    @Override
+    public void addProduct(Product product) {
+        addProduct(product);
     }
 
  /*   @Override

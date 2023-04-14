@@ -1,4 +1,3 @@
-/*
 package com.example.SpringApp.controller;
 
 
@@ -14,20 +13,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 
 @Controller
-@RequestMapping("/add" )
+//@RequestMapping("/add" )
 public class ProductController {
 
 @Autowired
     private ProductService productService;
 
- */
-/*   public ProductController(ProductService productService){
+   public ProductController(ProductService productService){
         this.productService = productService;
-    }*//*
+    }
 
 
     //@GetMapping("/")
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "products/add", method = RequestMethod.GET)
     public String showProducts(Model model) {
         Product product = new Product();
         model.addAttribute("product", product);
@@ -37,7 +35,7 @@ public class ProductController {
         return "add";
     }
 
-    @RequestMapping(value="/", method = RequestMethod.POST)
+    @RequestMapping(value="/products/add", method = RequestMethod.POST)
     public String addProd(@ModelAttribute("product") Product product){
        productService.addProduct(product);
             //Product prod = productServiceImpl.addProduct(product);
@@ -45,6 +43,7 @@ public class ProductController {
         return "redirect:/items";
     }
 
+/*
     @GetMapping(value = "/items")
     public String showItems(Model model) {
         Product product = new Product();
@@ -55,15 +54,14 @@ public class ProductController {
         return "items";
     }
 
-   */
-/* @RequestMapping(value="/items/{description}", method = RequestMethod.GET)
+ @RequestMapping(value="/items/{description}", method = RequestMethod.GET)
     public String getProductsByDescription(
                                         @PathVariable("description") String description, Model model) {
 
          model.addAttribute("prod", productService.getProductsByDescription(description));
         return "items";
 
-    }*//*
+    }
 
 
     @RequestMapping("/product")
@@ -72,6 +70,6 @@ public class ProductController {
         model.addAttribute("product",productService.getProductById(productId));
         return "product";
     }
+*/
 
 }
-*/

@@ -17,7 +17,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     //List<Product> findAllByActiveOrderByIdDesc(boolean active);
 
   //  Optional<Product> findByIdAndActive(Integer id, boolean active);
-
+     void addProduct(Product product);
      List<Product> getProductsByDescription(String description);
     Product getProductById(String productID);
 }

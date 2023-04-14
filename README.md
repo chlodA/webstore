@@ -8,4 +8,16 @@
 - Maven
 - Thymeleaf
 
+## Endpoints
+
+
+| Methods       | Urls          | Actions |
+| ------------- |:-------------:| -------:|
+|               |               |         |
+|               |               |         |
+|               |               |         |
+
+
 ###### Project is not finisched yet.
+
+
