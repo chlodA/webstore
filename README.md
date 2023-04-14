@@ -12,7 +12,7 @@
 
 
 | Methods       | Urls                              | Actions                                         |
-| ------------- |:---------------------------------:| -----------------------------------------------:|
+| ------------- |-----------------------------------| ------------------------------------------------|
 | POST          | /webstore/products/               | create new Product                              |
 | GET           | /webstore/products/               | retrieve all Products                           |
 | GET           | /webstore/products/:id            | retrieve a Product by :id                       |
