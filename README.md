@@ -11,15 +11,15 @@
 ## Endpoints
 
 
-| Methods       | Urls                              | Actions                                         |
-| ------------- |-----------------------------------| ------------------------------------------------|
-| POST          | /webstore/products/               | create new Product                              |
-| GET           | /webstore/products/               | retrieve all Products                           |
-| GET           | /webstore/products/:id            | retrieve a Product by :id                       |
-| PUT           | /webstore/products/:id            | update a Product by :id                         |
-| DELETE        | /webstore/products/:id            | delete a Product by :id                         |
-| DELETE        | /webstore/products                | delete all Products                             |
-| GET           | /webstore/products?title=[keyword]|find all Products which title contains keyword   |
+| Methods       | Urls                     | Actions                                         |
+| ------------- |--------------------------| ------------------------------------------------|
+| POST          | /products/create               | create new Product                              |
+| GET           | /products                | retrieve all Products                           |
+| GET           | /products/:id            | retrieve a Product by :id                       |
+| PUT           | /products/update/:id            | update a Product by :id                         |
+| DELETE        | /products/delete/:id            | delete a Product by :id                         |
+| DELETE        | /products                | delete all Products                             |
+| GET           | /products?title=[keyword]|find all Products which title contains keyword   |
 
 
 ###### Project is not finisched yet.

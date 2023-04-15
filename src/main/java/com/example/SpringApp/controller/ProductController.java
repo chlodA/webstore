@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-//@RequestMapping("/webstore")
 public class ProductController {
     private final ProductService productService;
     @Autowired
@@ -25,21 +24,21 @@ public class ProductController {
         return "products_list";
     }
 
-    @GetMapping("/showNewProductForm")
+    @GetMapping("/products/create")
     public String showProducts(Model model) {
         Product product = new Product();
         model.addAttribute("product", product);
         return "add_product";
     }
 
-    @PostMapping(value="/addProduct")
+    @PostMapping(value="/saveProduct")
     public String addProd(@ModelAttribute("product") Product product) {
         productService.saveProduct(product);
         //Product prod = productServiceImpl.addProduct(product);
-        return "redirect:/product_list";
+        return "redirect:/products";
     }
 
-    @GetMapping("/showFormForUpdate/{id}")
+    @GetMapping("/products/update/{id}")
     public String showFormForUpdate(@PathVariable ( value = "id") long id, Model model) {
 
         Product product = productService.getProductById(id);
@@ -49,7 +48,7 @@ public class ProductController {
         return "update_product";
     }
 
-    @GetMapping("/deleteProduct/{id}")
+    @GetMapping("/products/delete/{id}")
     public String deleteProduct(@PathVariable (value = "id") long id) {
         this.productService.deleteProductById(id);
         return "redirect:/products";
