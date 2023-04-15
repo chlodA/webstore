@@ -7,62 +7,50 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
-@Autowired
-    private ProductRepository productRepository;
 
-    public ProductServiceImpl(ProductRepository productRepository){
+    private ProductRepository productRepository;
+    @Autowired
+    public ProductServiceImpl(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
-    public List<Product> getProducts(){
+
+    @Override
+    public List<Product> getProducts() {
         return productRepository.findAll();
     }
 
-   /* public Product getProduct(Integer id) {
-        return productRepository.findByIdAndActive(id,true).orElseThrow(NotFoundException::new);
-    }*/
-
-  /*  @Override
-    public void addProduct(Product product) {
+    @Override
+    public void saveProduct(Product product) {
         this.productRepository.save(product);
+    }
+
+/*    @Override
+    public List<Product> getProductsByName(String productName) {
+        return productRepository.getProductsByName(productName);
     }*/
 
     @Override
-    public void addProduct(Product product) {
-        addProduct(product);
-    }
-
- /*   @Override
-    public List<Product> getProductsByCategory(String description) {
-        return null;
-    }*/
-@Override
-    public List<Product> getProductsByDescription(String description){
-        return productRepository.getProductsByDescription(description);
-    }
-
-    public Product getProductById(String productID){
-        return productRepository.getProductById(productID);
-    }
-
-    /*public Product addProd(Product product){
-        return productRepository.save(product);
-    }*/
-
-/*    @Override
-    public void updateAllStock() {
-        List<Product> allProducts =
-                productRepository.getAllProducts();
-        for(Product product : allProducts) {
-            if(product.getUnitsInStock()<500)
-                productRepository.updateStock
-                        (product.getProductId(),
-                                product.getUnitsInStock()+1000);
+    public Product getProductById(Long id) {
+        Optional< Product > optional = productRepository.findById(id);
+        Product product = null;
+        if (optional.isPresent()) {
+            product = optional.get();
+        } else {
+            throw new RuntimeException(" Product not found for id :: " + id);
         }
-    }*/
+        return product;
+    }
+
+    @Override
+    public void deleteProductById(Long id) {
+        this.productRepository.deleteById(id);
+    }
+
 
 
 }

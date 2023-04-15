@@ -3,15 +3,15 @@ package com.example.SpringApp.service;
 import com.example.SpringApp.model.Product;
 
 import java.util.List;
-
+//@Service
 public interface ProductService {
 
     List<Product> getProducts();
-    void addProduct(Product product);
+    void saveProduct(Product product);
+  /*  List<Product> getProductsByName(String productName);*/
+    Product getProductById(Long id);
+    void deleteProductById(Long id);
 
-    List<Product> getProductsByDescription(String description);
-
-    Product getProductById(String productID);
 
 
 }

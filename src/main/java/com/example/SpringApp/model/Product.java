@@ -8,9 +8,10 @@ import java.math.BigDecimal;
 @Entity
 @Table(name="products")
 public class Product {
+
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long id;
+    private long id;
 
     private String productId;
 
@@ -30,7 +31,7 @@ public class Product {
     private boolean discontinued;
     private String condit;
     public Product() {
-        super();
+
     }
     public Product(String productId, String productName, BigDecimal unitPrice, String description) {
         this.productId = productId;
@@ -38,7 +39,13 @@ public class Product {
         this.unitPrice = unitPrice;
         this.description = description;
     }
+    public long getId() {
+        return id;
+    }
 
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getProductId() {
         return productId;
@@ -120,31 +127,7 @@ public class Product {
         this.condit = condition;
     }
 
-/*    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        com.example.SpringApp.domain.Product other = (com.example.SpringApp.domain.Product) obj;
-        if (productId == null) {
-            if (other.productId != null)
-                return false;
-        } else if (!productId.equals(other.productId))
-            return false;
-        return true;
-    }*/
-/*    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result
-                + ((productId == null) ? 0 :
-                productId.hashCode());
-        return result;
-    }*/
+
 
     @Override
     public String toString() {

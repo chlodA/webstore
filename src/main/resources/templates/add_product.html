@@ -10,7 +10,7 @@
 </head>
 <body class="container">
 <h1 class="py-5">Thymeleaf Form handling Demo</h1>
-<form method="POST" th:action="@{/add/}" th:object="${product}" class="col card p-3 mb-5">
+<form method="POST" th:action="@{/saveProduct}" th:object="${product}" class="col card p-3 mb-5">
     <div class="form-group">
         <label for="firstName">Name</label>
         <input id="firstName" placeholder="Enter Name" required type="text" th:field="*{name}"
@@ -43,6 +43,6 @@
     </div>-->
     <input type="submit" class="btn btn-primary" value="Create Product">
 </form>
-
+<a th:href = "@{/}"> Back to Home Page</a>
 </body>
 </html>
