@@ -17,6 +17,15 @@ public class ProductController {
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
+
+    @GetMapping("/product")
+    public String findByProductId(@RequestParam("id") String
+                                         productId, Model model) {
+        model.addAttribute("product",productService.findByProductId(productId));
+        return "product";
+    }
+
+
     @GetMapping("/products")
     public String viewProducts(Model model) {
         List<Product> productList = productService.getProducts();
