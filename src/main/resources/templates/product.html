@@ -13,18 +13,17 @@
 <section>
   <div class="jumbotron">
     <div class="container">
-      <h1>Products</h1>
+      <h1>Product</h1>
     </div>
   </div>
 </section>
 <section class="container">
   <div class="row">
     <div class="col-md-5">
-     <!-- <h3 th:text=" ${product.name}"></h3>-->
+      <h3 th:text=" ${product.name}"></h3>
       <p th:text="${product.description}"></p>
       <p>
-        <strong>Item Code : </strong><span
-              class="label label warning" th:text="${product.productId}">
+        <strong>Item Code : </strong><span th:text="${product.productId}">
 </span>
       </p>
       <p>
