@@ -29,10 +29,6 @@ public class ProductServiceImpl implements ProductService {
         this.productRepository.save(product);
     }
 
-/*    @Override
-    public List<Product> getProductsByName(String productName) {
-        return productRepository.getProductsByName(productName);
-    }*/
 
     @Override
     public Product getProductById(Long id) {

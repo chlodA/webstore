@@ -31,6 +31,8 @@ public class ProductController {
         return "add_product";
     }
 
+    /*TO DO
+    * If an item with same name already exits then return success false with error messag*/
     @PostMapping(value="/saveProduct")
     public String addProd(@ModelAttribute("product") Product product) {
         productService.saveProduct(product);
@@ -47,12 +49,20 @@ public class ProductController {
         model.addAttribute("product", product);
         return "update_product";
     }
-
+    /*
+        *  Delete an item based on Id
+        * Throw 404 exception if not found*/
     @GetMapping("/products/delete/{id}")
     public String deleteProduct(@PathVariable (value = "id") long id) {
-        this.productService.deleteProductById(id);
-        return "redirect:/products";
+
+            this.productService.deleteProductById(id);
+            return "redirect:/products";
+
+
+
     }
+
+
 
 
 /*    @GetMapping("/showFormForUpdate/{id}")
