@@ -12,7 +12,7 @@
 </head>
 <body class="container">
 <h1 class="py-5">Edit product</h1>
-<form class="col card p-3 my-5" method="post"  th:action="@{/saveProduct}" th:object="${product}">
+<form class="col card p-3 my-5" method="post"  th:action="@{/products/update/{id}(id=${product.id})}" th:object="${product}">
     <div class="form-group">
         <label for="firstName">Product Name</label>
         <input id="firstName" placeholder="Enter Name" required type="text" th:field="*{name}"

@@ -13,11 +13,10 @@ import java.util.Optional;
 public class ProductServiceImpl implements ProductService {
 
     private ProductRepository productRepository;
-    @Autowired
+
     public ProductServiceImpl(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
-
 
     @Override
     public List<Product> getProducts() {
@@ -25,7 +24,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void saveProduct(Product product) {
+    public void save(Product product) {
         this.productRepository.save(product);
     }
 
@@ -33,7 +32,6 @@ public class ProductServiceImpl implements ProductService {
     public Product findByProductId(String productId) {
         return productRepository.findByProductId(productId);
     }
-
 
     @Override
     public Product getProductById(Long id) {
