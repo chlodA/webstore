@@ -17,7 +17,7 @@ public class ProductController {
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
-
+    //http://localhost:8080/product?id=1
     @GetMapping("/product")
     public String findByProductId(@RequestParam("id") String
                                          productId, Model model) {
