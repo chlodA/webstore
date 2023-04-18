@@ -1,10 +1,9 @@
 package com.example.SpringApp.model;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 
-
-import java.math.BigDecimal;
-
+@Builder
 @Entity
 @Table(name="products")
 public class Product {
@@ -13,11 +12,11 @@ public class Product {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private long id;
 
-    private String productId;
+    private String itemNumber;
 
     private String productName;
 
-    private BigDecimal unitPrice;
+    private double unitPrice;
 
     private String description;
 
@@ -33,12 +32,21 @@ public class Product {
     public Product() {
 
     }
-    public Product(String productId, String productName, BigDecimal unitPrice, String description) {
-        this.productId = productId;
+
+    public Product(long id, String itemNumber, String productName, double unitPrice, String description, String manufacturer, String category, long unitsInStock, long unitsInOrder, boolean discontinued, String condit) {
+        this.id = id;
+        this.itemNumber = itemNumber;
         this.productName = productName;
         this.unitPrice = unitPrice;
         this.description = description;
+        this.manufacturer = manufacturer;
+        this.category = category;
+        this.unitsInStock = unitsInStock;
+        this.unitsInOrder = unitsInOrder;
+        this.discontinued = discontinued;
+        this.condit = condit;
     }
+
     public long getId() {
         return id;
     }
@@ -47,12 +55,12 @@ public class Product {
         this.id = id;
     }
 
-    public String getProductId() {
-        return productId;
+    public String getItemNumber() {
+        return itemNumber;
     }
 
-    public void setProductId(String productId) {
-        this.productId = productId;
+    public void setItemNumber(String productId) {
+        this.itemNumber = productId;
     }
 
     public String getName() {
@@ -63,11 +71,11 @@ public class Product {
         this.productName = productName;
     }
 
-    public BigDecimal getUnitPrice() {
+    public double getUnitPrice() {
         return unitPrice;
     }
 
-    public void setUnitPrice(BigDecimal unitPrice) {
+    public void setUnitPrice(double unitPrice) {
         this.unitPrice = unitPrice;
     }
 
@@ -133,7 +141,7 @@ public class Product {
     public String toString() {
         return "Product{" +
                 "id=" + id +
-                ", productId='" + productId + '\'' +
+                ", productId='" + itemNumber + '\'' +
                 ", productName='" + productName + '\'' +
                 ", unitPrice=" + unitPrice +
                 ", description='" + description + '\'' +

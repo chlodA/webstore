@@ -22,13 +22,13 @@ public class ProductController {
     @GetMapping("/product")
     public String findByProductId(@RequestParam("id") String
                                          productId, Model model) {
-        model.addAttribute("product",productService.findByProductId(productId));
+        model.addAttribute("product",productService.findByItemNumber(productId));
         return "product";
     }
 
     @GetMapping("/products")
     public String viewProducts(Model model) {
-        List<Product> productList = productService.getProducts();
+        List<Product> productList = productService.getAllProducts();
         model.addAttribute("productList", productList);
         return "products_list";
     }
@@ -51,8 +51,7 @@ public class ProductController {
 
     @GetMapping("/products/update/{id}")
     public String showFormForUpdate(@PathVariable ( value = "id") long id, Model model) {
-        Product product = productService.getProductById(id);
-                //.orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));;
+        Product product = productService.getProductById(id);//.orElseThrow(() -> new IllegalArgumentException("Invalid product Id:" + id));;
         model.addAttribute("product", product);
         return "update_product";
     }
