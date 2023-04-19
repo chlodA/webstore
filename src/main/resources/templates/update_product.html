@@ -33,6 +33,30 @@
         <input id="productID" placeholder="Enter product ID" required type="text" th:field="*{itemNumber}"
                class="form-control"/>
     </div>
+    <div class="form-group">Manufacturer</label>
+        <input id="manufacturer" placeholder="Enter manufacturer" required type="text" th:field="*{manufacturer}"
+               class="form-control"/>
+    </div>
+    <div class="form-group">
+        <label for="category">Category</label>
+        <input id="category" placeholder="Enter category" required type="text" th:field="*{category}"
+               class="form-control"/>
+    </div>
+    <div class="form-group">
+        <label for="unitsInStock">Units in stock</label>
+        <input id="unitsInStock" placeholder="Enter units in Stock" required type="text" th:field="*{unitsInStock}"
+               class="form-control"/>
+    </div>
+    <div class="form-group">
+        <label for="unitsInOrder">Units in order</label>
+        <input id="unitsInOrder" placeholder="Enter units in Order" required type="text" th:field="*{unitsInOrder}"
+               class="form-control"/>
+    </div>
+    <div class="form-group">
+        <label for="discontinued">Discounted</label>
+        <input id="discontinued" placeholder="Enter discontinued" required type="text" th:field="*{discontinued}"
+               class="form-control"/>
+    </div>
     <input type="submit" class="btn btn-primary" value="Save">
 </form>
 

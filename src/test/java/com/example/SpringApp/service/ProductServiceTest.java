@@ -20,6 +20,7 @@ import org.mockito.Mock;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @ExtendWith(MockitoExtension.class)
 class ProductServiceTest {
@@ -67,7 +68,7 @@ class ProductServiceTest {
     }
 
     @Test
-    public void get_product_by_id_test(){
+    public void get_product_by_id_test() throws RuntimeException{
         Mockito.when(productRepository.findById(1L)).thenReturn(Optional.ofNullable(product1));
         assertThat(productServiceImpl.getProductById(product1.getId())).isEqualTo(product1);
     }
@@ -80,11 +81,22 @@ class ProductServiceTest {
     }
 
     @Test
+    void delete_product_test() {
+        // Arrange
+        doNothing().when(productRepository).deleteById(product1.getId());
+        // Act & Assert
+        productServiceImpl.deleteProductById(1L);
+        verify(productRepository, times(1)).deleteById(product1.getId());
+        verifyNoMoreInteractions(productRepository);
+    }
+
+
+  /*  @Test
     public void delete_product_by_id_test(){
         productRepository.save(product1);
         productRepository.deleteById(product1.getId());
         Optional optional = productRepository.findById(product1.getId());
         assertEquals(Optional.empty(), optional);
-    }
+    }*/
 
 }

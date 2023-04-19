@@ -40,12 +40,9 @@ public class ProductController {
         return "add_product";
     }
 
-    /*TO DO
-    * If an item with same name already exits then return success false with error messag*/
     @PostMapping(value="/saveProduct")
     public String addProd(@ModelAttribute("product") Product product) {
         productService.save(product);
-        //Product prod = productServiceImpl.addProduct(product);
         return "redirect:/products";
     }
 
@@ -57,50 +54,22 @@ public class ProductController {
     }
 
     @PostMapping("/products/update/{id}")
-    public String updateUser(@PathVariable("id") long id, @Valid Product product,
-                             BindingResult result, Model model) {
+    public String updateProduct(@PathVariable("id") long id, @Valid Product product,
+                                BindingResult result, Model model) {
         if (result.hasErrors()) {
             product.setId(id);
             return "update_product";
         }
 
-        productService.save(product);
+        productService.update(product);
         return "redirect:/products";
     }
-    /*
-        *  Delete an item based on Id
-        * Throw 404 exception if not found*/
+
     @GetMapping("/products/delete/{id}")
     public String deleteProduct(@PathVariable (value = "id") long id) {
-
             this.productService.deleteProductById(id);
             return "redirect:/products";
 
-
-
     }
-
-
-
-
-/*    @GetMapping("/showFormForUpdate/{id}")
-    public String showFormForUpdate(@PathVariable(value = "id") long id, Model model) {
-
-        // get product from the service
-        Product product = productService.getProductById(id);
-
-        // set product as a model attribute to pre-populate the form
-        model.addAttribute("product", product);
-        return "update";
-    }
-
-    @GetMapping("/deleteEProduct/{id}")
-    public String deleteProduct(@PathVariable(value = "id") long id) {
-
-        // call delete product method
-        this.productService.deleteProductById(id);
-        return "redirect:/";
-    }*/
-
 
 }

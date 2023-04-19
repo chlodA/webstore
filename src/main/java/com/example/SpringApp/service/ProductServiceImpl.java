@@ -26,12 +26,16 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product save(Product product) {
-       /* Optional<Product> savedProduct = productRepository.findByName(product.getName());
+        Optional<Product> savedProduct = productRepository. findByProductName(product.getName());
         if(savedProduct.isPresent()){
-            throw new ResourceNotFoundException("Product already exist with given email:" + product.getName());
-        }*/
+            throw new RuntimeException("Product already exist with given name:" + product.getName());
+        }
         return this.productRepository.save(product);
+    }
 
+    @Override
+    public  Product update(Product product){
+        return this.productRepository.save(product);
     }
 
     @Override
@@ -50,16 +54,13 @@ public class ProductServiceImpl implements ProductService {
         }
         return product;
     }
-
+    /* TO DO
+     *  Delete an item based on Id
+     * Throw 404 exception if not found*/
     @Override
-    public Product deleteProductById(Long id) {
-        Product product = null;
-        Optional optional = productRepository.findById(id);
-        if (optional.isPresent()) {
-            product = productRepository.findById(id).get();
-            productRepository.deleteById(id);
-        }
-        return product;
+    public void deleteProductById(Long id) {
+        this.productRepository.deleteById(id);
+
     }
 
 }
