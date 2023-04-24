@@ -51,6 +51,7 @@
             <td class="btn-group">
                 <a th:href="@{/products/update/{id}(id=${prod.id})}" class="btn btn-primary ">Update</a>
                 <a th:href="@{/products/delete/{id}(id=${prod.id})}" class="btn btn-success" type="button">Delete</a>
+                <a th:href="@{/product(id=${prod.id})}" class="btn btn-primary" type="button"> Details</a>
 
                 <!--TO DO MODAL-->
                 <!--<a th:href="@{/products/delete/{id}(id=${prod.id})}"-->
@@ -73,12 +74,11 @@
                             &lt;!&ndash; Modal footer &ndash;&gt;
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                <a th:href="@{/products/delete/{id}(id=${prod.id})}" class="btn btn-success" type="button">Yes</a>&lt;!&ndash;th:attr="href='/products/delete/'+'{id} (id=${prod.id})'"&ndash;&gt;
+                                <a th:href="@{/products/delete/{id}(id=${prod.id})}" class="btn btn-success" type="button">Yes</a>&lt;!&ndash;th:attr="href="/products/delete/'+'{id} (id=${prod.id})'"&ndash;&gt;
                             </div>
                         </div>
                     </div>
                 </div>-->
-
 
             </td>
 

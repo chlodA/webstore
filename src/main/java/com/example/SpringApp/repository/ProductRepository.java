@@ -5,14 +5,19 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
-    //SELECT * FROM PRODUCTS WHERE ID = :id";
-    Product findByItemNumber(String itemNumber);
+
+    //Product findByItemNumber(String itemNumber);
     Optional<Product> findByProductName(String productName);
+    //"SELECT * FROM PRODUCTS WHERE CATEGORY =:category"
+    List<Product> findByCategory(String category);
+    //@Query("SELECT * FROM PRODUCTS WHERE CATEGORY IN (:categories ) AND MANUFACTURER IN ( :brands)")
 
-    List<Product> getProductsByCategory(String category);
+   // List <Product> filterProducts(String category, Map<String,List<String>> filterParams);
 
+    List<Product> findByCategoryAndManufacturer(String category, String manufacturer);
 }

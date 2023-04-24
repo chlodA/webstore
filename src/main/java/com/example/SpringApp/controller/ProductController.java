@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class ProductController {
@@ -18,13 +19,14 @@ public class ProductController {
         this.productService = productService;
     }
 
-    //http://localhost:8080/product?id=1
+    //Sample URL: http://localhost:8080/product?id=1
     @GetMapping("/product")
-    public String findByProductId(@RequestParam("id") String
-                                         productId, Model model) {
-        model.addAttribute("product",productService.findByItemNumber(productId));
+    public String findByProductId(@RequestParam("id") long
+                                         id, Model model) {
+        model.addAttribute("product",productService.getProductById(id));
         return "product";
     }
+
 
     @GetMapping("/products")
     public String viewProducts(Model model) {
@@ -60,10 +62,47 @@ public class ProductController {
             product.setId(id);
             return "update_product";
         }
-
         productService.update(product);
         return "redirect:/products";
     }
+
+    @GetMapping("/products/{category}")
+    public String findByCategory(@PathVariable("category") String category, Model model){
+        List<Product> products = productService.findByCategory(category);
+        // TO DO If we didn't find a product matching that category throw an exception
+       /* if (products == null || products.isEmpty()) {
+            throw new
+        }*/
+        model.addAttribute("productList", productService.findByCategory(category));
+        return "products_list";
+    }
+
+/*TO DO add multiple filters to list products
+* http://localhost:8080/products/Tablet/price;low=200;high=400?brand="Google"*/
+   /* @RequestMapping("/products/{category}/{params}")
+    public String filterProducts(@PathVariable("category") String productCategory,@MatrixVariable(pathVar="params") Map <String,
+            List<String>> filterParams ,Model model){
+
+        // Request a product with a particular category  and add it to the model
+        model.addAttribute("productsList",productService.getProductsByManuAndBrand(productCategory, filterParams));
+
+        // Let the View Resolver know what view page to use
+        return "products_list";
+    }*/
+
+    // Allows a search by brands and categories
+    // Sample URL: http://localhost:8080//products/filter/params;brands=Google;category=Tablet
+    @RequestMapping("/products/filter/{params}")
+    public String getProductsByFilter(@MatrixVariable(pathVar="params") Map <String, String> filterParams,Model model){
+
+        String manufacturer = (String)filterParams.get("brands");
+        String category = (String)filterParams.get("category");
+
+        model.addAttribute("productList", productService.getProductsByFilter(category,manufacturer));
+
+        return "products_list";
+    }
+
 
     @GetMapping("/products/delete/{id}")
     public String deleteProduct(@PathVariable (value = "id") long id) {
