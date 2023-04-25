@@ -3,8 +3,6 @@ package com.example.SpringApp.service;
 import com.example.SpringApp.model.Product;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 //@Service
 public interface ProductService {
@@ -16,7 +14,7 @@ public interface ProductService {
     Product getProductById(Long id);
     void deleteProductById(Long id);
     List<Product> findByCategory(String category);
-    Optional<Product> findByProductName(String productName);
+    List<Product> findByProductName(String productName);
     //List <Product> filterProducts(String category,Map<String, List<String>> filterParams);
     Object getProductsByFilter(String category, String manufacturer);
 

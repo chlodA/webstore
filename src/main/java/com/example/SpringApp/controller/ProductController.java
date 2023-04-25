@@ -1,14 +1,11 @@
 package com.example.SpringApp.controller;
 
 
-import com.example.SpringApp.exceptions.NoProductsFoundUnderCategoryException;
+import com.example.SpringApp.exceptions.NoProductsFoundException;
 import com.example.SpringApp.exceptions.ProductNotFoundException;
 import com.example.SpringApp.model.Product;
 import com.example.SpringApp.service.ProductService;
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -39,13 +36,23 @@ public class ProductController {
     @GetMapping("/products/{category}")
     public String findByCategory(@PathVariable("category") String category, Model model){
         List<Product> products = productService.findByCategory(category);
-        // If we didn't find a product matching that category throw an exception
         if (products == null || products.isEmpty()) {
-            throw new NoProductsFoundUnderCategoryException(category);
+            throw new NoProductsFoundException();
         }
         model.addAttribute("productList", products);
         return "products_list";
     }
+//https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc
+
+ /*   @GetMapping("/products/{name}")
+    public String findByProductName(@PathVariable("name") String productName, Model model){
+        List<Product> products = productService.findByProductName(productName);
+        if (products == null || products.isEmpty()) {
+            throw new NoProductsFoundException();
+        }
+        model.addAttribute("productList", products);
+        return "products_list";
+    }*/
 
     @GetMapping("/products")
     public String viewProducts(Model model) {
@@ -70,7 +77,11 @@ public class ProductController {
     @GetMapping("/products/update/{id}")
     public String showFormForUpdate(@PathVariable ( value = "id") long id, Model model) {
         Product product = productService.getProductById(id);//.orElseThrow(() -> new IllegalArgumentException("Invalid product Id:" + id));;
-        model.addAttribute("product", product);
+        if(product == null){
+            throw new ProductNotFoundException(id);
+        } else {
+            model.addAttribute("product", product);
+        }
         return "update_product";
     }
 
@@ -113,7 +124,9 @@ public class ProductController {
         return "products_list";
     }
 
-
+    /* TO DO
+     *  Delete an item based on Id
+     * Throw 404 exception if not found*/
     @GetMapping("/products/delete/{id}")
     public String deleteProduct(@PathVariable (value = "id") long id) {
             this.productService.deleteProductById(id);

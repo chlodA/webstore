@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import java.lang.RuntimeException;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -24,10 +23,10 @@ public class ProductServiceImpl implements ProductService {
     }
     @Override
     public Product save(Product product) {
-        Optional<Product> savedProduct = productRepository. findByProductName(product.getName());
-        if(savedProduct.isPresent()){
+        List<Product> savedProduct = productRepository.findByProductName(product.getName());
+      /*  if(savedProduct.isPresent()){
             throw new RuntimeException("Product already exist with given name:" + product.getName());
-        }
+        }*/
         return this.productRepository.save(product);
     }
     @Override
@@ -50,12 +49,13 @@ public class ProductServiceImpl implements ProductService {
             throw new RuntimeException(" Product not found for id: " + id);
         }
         return product;
+
     }
     public List<Product> findByCategory(String category){
         return productRepository.findByCategory(category);
     }
 
-    public Optional<Product> findByProductName(String productName){
+    public List<Product> findByProductName(String productName){
         return productRepository.findByProductName(productName);
     }
 
@@ -70,11 +70,6 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findByCategoryAndManufacturer(category, manufacturer);
     }
 
-
-
-    /* TO DO
-     *  Delete an item based on Id
-     * Throw 404 exception if not found*/
     @Override
     public void deleteProductById(Long id) {
         this.productRepository.deleteById(id);
