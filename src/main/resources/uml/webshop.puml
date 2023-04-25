@@ -1,0 +1,115 @@
+@startuml
+
+class Order {
+  Long id
+  Integer address_id
+  LocalDateTime ordered_on
+  String phone_number
+  OrderState order_state
+  String order_state_info
+  LocalDateTime delivery_date_time
+  String comment
+}
+
+class OrderItem {
+  Long id
+  Integer order_id
+  Integer product_id
+  Integer quantity
+  String product_name
+  decimal nett_price
+  Integer vat
+}
+
+class Shop {
+  Long id
+  Integer address_id
+  String name
+  decimal delivery_fee
+  decimal minimum_delivery
+  decimal max_delivery_distance
+  boolean hidden = false
+}
+
+
+class ProductCategory {
+  Long id;
+  String name;
+}
+
+class Product {
+  Long id
+  String itemNumber;
+  String productName;
+  double unitPrice;
+  String description;
+  String manufacturer;
+  String category;
+  long unitsInStock;
+  long unitsInOrder;
+  boolean discontinued = false;
+  String condit;
+}
+
+class User {
+  Long id
+  UserType type
+  String username
+  String password
+}
+
+class ShopAdmin {
+}
+
+class Customer {
+}
+
+enum UserType {
+Customer
+ShopAdmin
+}
+
+class Address {
+  Long id
+  String addressee
+  String street
+  String streetNumber
+  String zipCode
+  String city
+}
+
+enum OrderState {
+  ordered
+  rejected/cancelled?
+  in_preparation
+  in_delivery
+  finished
+}
+
+User <-r- UserType
+
+User <|-- ShopAdmin
+User <|-- Customer
+ShopAdmin "1" <-- "1" Shop
+
+Product "*" -u-> "1" ProductCategory
+OrderItem "*" -l-> "1" Order
+ProductCategory "*" -u-> "1" Shop
+OrderItem "*" -l-> "1" Product
+
+Shop -u-> Address
+Order -l- Shop
+
+Order -r-> OrderState
+Order -u-> Address
+
+Order "1" -- "1" Review
+
+class Review {
+  Long id
+  integer rating???
+  string note???
+  boolean hidden = false
+}
+
+@enduml

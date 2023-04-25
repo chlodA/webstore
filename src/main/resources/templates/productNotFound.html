@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Products</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <title>Product not found</title>
+</head>
+<body>
+<section>
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="alert alert-danger"> There is no product found with the Product id
+                <p th:text="${invalidProductId}"></p></h1>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="container">
+        <p th:text="${url}"</p>
+        <p th:text="${exception}"</p>
+    </div>
+    <div class="container">
+        <p>
+            <a th:href="/products" class="btn btn-primary">
+            <span class="glyphicon-hand-left glyphicon">
+</span> products
+            </a>
+        </p>
+    </div>
+</section>
+
+</body>
+</html>
