@@ -2,11 +2,17 @@ package com.example.SpringApp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 
 @SpringBootApplication
 
-public class SpringAppApplication {
+public class SpringAppApplication extends SpringBootServletInitializer {
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+		return builder.sources(SpringAppApplication.class);
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringAppApplication.class, args);

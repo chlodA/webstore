@@ -1,13 +1,17 @@
 package com.example.SpringApp.controller;
 
 
+import com.example.SpringApp.exceptions.NoProductsFoundUnderCategoryException;
+import com.example.SpringApp.exceptions.ProductNotFoundException;
 import com.example.SpringApp.model.Product;
 import com.example.SpringApp.service.ProductService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.Map;
@@ -17,6 +21,21 @@ public class ProductController {
     private final ProductService productService;
     public ProductController(ProductService productService) {
         this.productService = productService;
+    }
+//https://www.logicbig.com/tutorials/spring-framework/spring-boot/custom-thymeleaf-error-page.html
+    //https://www.baeldung.com/spring-boot-custom-error-page
+    //https://stackoverflow.com/questions/34454719/spring-boot-thymeleaf-custom-error-messages
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ModelAndView handleError(HttpServletRequest req,
+                                    ProductNotFoundException exception) {
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("invalidProductId",
+                exception.getProductId());
+        mav.addObject("exception", exception);
+        mav.addObject("url",
+                req.getRequestURL()+"?"+req.getQueryString());
+        mav.setViewName("productNotFound");
+        return mav;
     }
 
     //Sample URL: http://localhost:8080/product?id=1
@@ -69,11 +88,11 @@ public class ProductController {
     @GetMapping("/products/{category}")
     public String findByCategory(@PathVariable("category") String category, Model model){
         List<Product> products = productService.findByCategory(category);
-        // TO DO If we didn't find a product matching that category throw an exception
-       /* if (products == null || products.isEmpty()) {
-            throw new
-        }*/
-        model.addAttribute("productList", productService.findByCategory(category));
+        // If we didn't find a product matching that category throw an exception
+        if (products == null || products.isEmpty()) {
+            throw new NoProductsFoundUnderCategoryException();
+        }
+        model.addAttribute("productList", products);
         return "products_list";
     }
 
