@@ -6,4 +6,14 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class NoProductsFoundUnderCategoryException extends RuntimeException{
         private static final long serialVersionUID =
         3935230281455340039L;
+
+        private String category;
+
+        public NoProductsFoundUnderCategoryException(String category){
+                this.category=category;
         }
+
+        public String findByCategory(){
+                return category;
+        }
+}

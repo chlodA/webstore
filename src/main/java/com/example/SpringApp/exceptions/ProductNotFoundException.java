@@ -1,13 +1,13 @@
 package com.example.SpringApp.exceptions;
 
-public class ProductNotFoundException extends
-        RuntimeException{
-    private static final long serialVersionUID =
-            -694354952032299587L;
-    private String productId;
-    public ProductNotFoundException(String productId) {
-        this.productId = productId;
-    }
-    public String getProductId() {return productId;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
+public class ProductNotFoundException extends RuntimeException {
+    private static final long serialVersionUID = 1L;
+
+    public ProductNotFoundException(Long id){
+        super(String.format("Product with Id %d not found", id));
     }
 }

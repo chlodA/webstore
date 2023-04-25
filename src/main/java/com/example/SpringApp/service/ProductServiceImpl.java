@@ -47,7 +47,7 @@ public class ProductServiceImpl implements ProductService {
         if (optional.isPresent()) {
             product = optional.get();
         } else {
-            throw new RuntimeException(" Product not found for id :: " + id);
+            throw new RuntimeException(" Product not found for id: " + id);
         }
         return product;
     }

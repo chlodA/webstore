@@ -5,13 +5,14 @@ import com.example.SpringApp.exceptions.NoProductsFoundUnderCategoryException;
 import com.example.SpringApp.exceptions.ProductNotFoundException;
 import com.example.SpringApp.model.Product;
 import com.example.SpringApp.service.ProductService;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.Map;
@@ -22,30 +23,29 @@ public class ProductController {
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
-//https://www.logicbig.com/tutorials/spring-framework/spring-boot/custom-thymeleaf-error-page.html
-    //https://www.baeldung.com/spring-boot-custom-error-page
-    //https://stackoverflow.com/questions/34454719/spring-boot-thymeleaf-custom-error-messages
-    @ExceptionHandler(ProductNotFoundException.class)
-    public ModelAndView handleError(HttpServletRequest req,
-                                    ProductNotFoundException exception) {
-        ModelAndView mav = new ModelAndView();
-        mav.addObject("invalidProductId",
-                exception.getProductId());
-        mav.addObject("exception", exception);
-        mav.addObject("url",
-                req.getRequestURL()+"?"+req.getQueryString());
-        mav.setViewName("productNotFound");
-        return mav;
-    }
 
     //Sample URL: http://localhost:8080/product?id=1
     @GetMapping("/product")
-    public String findByProductId(@RequestParam("id") long
-                                         id, Model model) {
-        model.addAttribute("product",productService.getProductById(id));
+    public String findByProductId(@RequestParam("id") long id, Model model) {
+        Product product = productService.getProductById(id);
+        if(product == null){
+            throw new ProductNotFoundException(id);
+        } else {
+            model.addAttribute("product", product);
+        }
         return "product";
     }
 
+    @GetMapping("/products/{category}")
+    public String findByCategory(@PathVariable("category") String category, Model model){
+        List<Product> products = productService.findByCategory(category);
+        // If we didn't find a product matching that category throw an exception
+        if (products == null || products.isEmpty()) {
+            throw new NoProductsFoundUnderCategoryException(category);
+        }
+        model.addAttribute("productList", products);
+        return "products_list";
+    }
 
     @GetMapping("/products")
     public String viewProducts(Model model) {
@@ -85,16 +85,7 @@ public class ProductController {
         return "redirect:/products";
     }
 
-    @GetMapping("/products/{category}")
-    public String findByCategory(@PathVariable("category") String category, Model model){
-        List<Product> products = productService.findByCategory(category);
-        // If we didn't find a product matching that category throw an exception
-        if (products == null || products.isEmpty()) {
-            throw new NoProductsFoundUnderCategoryException();
-        }
-        model.addAttribute("productList", products);
-        return "products_list";
-    }
+
 
 /*TO DO add multiple filters to list products
 * http://localhost:8080/products/Tablet/price;low=200;high=400?brand="Google"*/

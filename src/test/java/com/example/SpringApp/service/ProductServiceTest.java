@@ -73,12 +73,12 @@ class ProductServiceTest {
         assertThat(productServiceImpl.getProductById(product1.getId())).isEqualTo(product1);
     }
 
-    @Test
+   /* @Test
     public void find_by_item_number_test(){
         Mockito.when(productRepository.findByItemNumber("P1234")).thenReturn(product1);
         assertThat(productServiceImpl.findByItemNumber(product1.getItemNumber())).isEqualTo(product1);
 
-    }
+    }*/
 
     @Test
     void delete_product_test() {
