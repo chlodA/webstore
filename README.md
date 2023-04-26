@@ -22,7 +22,7 @@
 | PUT           | /products/update/:id            | update a Product by :id                         |
 | DELETE        | /products/delete/:id            | delete a Product by :id                         |
 | DELETE        | /products                | delete all Products                             |
-| GET           | /products?title=[keyword]|find all Products which title contains keyword   |
+| GET           | /products?description=[keyword]|find all Products which description contains keyword   |
 | GET           | /products?id=[productId]|find all Products which the Product Id   |
 
 ###### Project is not finisched yet.
