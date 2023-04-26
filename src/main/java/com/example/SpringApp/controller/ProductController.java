@@ -1,15 +1,17 @@
 package com.example.SpringApp.controller;
 
 
-import com.example.SpringApp.exceptions.NoProductsFoundException;
+import com.example.SpringApp.exceptions.ProductAlreadyExistsException;
 import com.example.SpringApp.exceptions.ProductNotFoundException;
 import com.example.SpringApp.model.Product;
 import com.example.SpringApp.service.ProductService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.Map;
@@ -26,33 +28,32 @@ public class ProductController {
     public String findByProductId(@RequestParam("id") long id, Model model) {
         Product product = productService.getProductById(id);
         if(product == null){
-            throw new ProductNotFoundException(id);
+            throw new ProductNotFoundException();
         } else {
             model.addAttribute("product", product);
         }
         return "product";
     }
 
-    @GetMapping("/products/{category}")
+    @GetMapping("/products/category/{category}")
     public String findByCategory(@PathVariable("category") String category, Model model){
         List<Product> products = productService.findByCategory(category);
         if (products == null || products.isEmpty()) {
-            throw new NoProductsFoundException();
+            throw new ProductNotFoundException();
         }
         model.addAttribute("productList", products);
         return "products_list";
     }
-//https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc
 
- /*   @GetMapping("/products/{name}")
+    @GetMapping("/products/name/{name}")
     public String findByProductName(@PathVariable("name") String productName, Model model){
         List<Product> products = productService.findByProductName(productName);
         if (products == null || products.isEmpty()) {
-            throw new NoProductsFoundException();
+            throw new ProductNotFoundException();
         }
         model.addAttribute("productList", products);
         return "products_list";
-    }*/
+    }
 
     @GetMapping("/products")
     public String viewProducts(Model model) {
@@ -70,21 +71,26 @@ public class ProductController {
 
     @PostMapping(value="/saveProduct")
     public String addProd(@ModelAttribute("product") Product product) {
+        List<Product> savedProduct = productService.findByProductName(product.getName());
+        if(!savedProduct.isEmpty()){
+            throw new ProductAlreadyExistsException();
+        }
         productService.save(product);
         return "redirect:/products";
     }
 
     @GetMapping("/products/update/{id}")
     public String showFormForUpdate(@PathVariable ( value = "id") long id, Model model) {
-        Product product = productService.getProductById(id);//.orElseThrow(() -> new IllegalArgumentException("Invalid product Id:" + id));;
+        Product product = productService.getProductById(id);
         if(product == null){
-            throw new ProductNotFoundException(id);
+            throw new ProductNotFoundException();
         } else {
             model.addAttribute("product", product);
         }
         return "update_product";
     }
-
+  /*TODO
+  *  add error handling if name changed to one that already exists*/
     @PostMapping("/products/update/{id}")
     public String updateProduct(@PathVariable("id") long id, @Valid Product product,
                                 BindingResult result, Model model) {
@@ -95,21 +101,6 @@ public class ProductController {
         productService.update(product);
         return "redirect:/products";
     }
-
-
-
-/*TO DO add multiple filters to list products
-* http://localhost:8080/products/Tablet/price;low=200;high=400?brand="Google"*/
-   /* @RequestMapping("/products/{category}/{params}")
-    public String filterProducts(@PathVariable("category") String productCategory,@MatrixVariable(pathVar="params") Map <String,
-            List<String>> filterParams ,Model model){
-
-        // Request a product with a particular category  and add it to the model
-        model.addAttribute("productsList",productService.getProductsByManuAndBrand(productCategory, filterParams));
-
-        // Let the View Resolver know what view page to use
-        return "products_list";
-    }*/
 
     // Allows a search by brands and categories
     // Sample URL: http://localhost:8080//products/filter/params;brands=Google;category=Tablet
@@ -124,14 +115,44 @@ public class ProductController {
         return "products_list";
     }
 
-    /* TO DO
-     *  Delete an item based on Id
-     * Throw 404 exception if not found*/
+
     @GetMapping("/products/delete/{id}")
     public String deleteProduct(@PathVariable (value = "id") long id) {
+        Product product = productService.getProductById(id);
+        if(product == null){
+            throw new ProductNotFoundException();
+        } else {
             this.productService.deleteProductById(id);
+        }
             return "redirect:/products";
 
     }
+
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ModelAndView handleError(HttpServletRequest req,
+                                    ProductNotFoundException exception) {
+        ModelAndView mav = new ModelAndView();
+       /* mav.addObject("invalidCategoryName",
+                exception.findByCategory());*/
+        mav.addObject("exception", exception);
+        mav.addObject("url",
+                req.getRequestURL()+"?"+req.getQueryString());
+        mav.setViewName("errors/error_product_not_found_404");
+        return mav;
+    }
+
+    @ExceptionHandler(ProductAlreadyExistsException.class)
+    public ModelAndView handleError(HttpServletRequest req,
+                                    ProductAlreadyExistsException exception) {
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("exception", exception);
+        mav.addObject("url",
+                req.getRequestURL()+"?"+req.getQueryString());
+        mav.setViewName("errors/error_product_already_exists_400");
+        return mav;
+    }
+
+
+
 
 }

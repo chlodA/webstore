@@ -1,27 +1,23 @@
 package com.example.SpringApp.controller;
 
-import com.example.SpringApp.exceptions.NoProductsFoundException;
 import jakarta.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.servlet.ModelAndView;
+
+import java.sql.SQLException;
 
 @ControllerAdvice
 public class GlobalExceptionController {
 
-    @ExceptionHandler(NoProductsFoundException.class)
-    public ModelAndView handleError(HttpServletRequest req,
-                                    NoProductsFoundException exception) {
-        ModelAndView mav = new ModelAndView();
-     /*   mav.addObject("invalidCategoryName",
-                exception.findByCategory());*/
-        mav.addObject("exception", exception);
-        mav.addObject("url",
-                req.getRequestURL()+"?"+req.getQueryString());
-        mav.setViewName("error_category_name");
-        return mav;
-    }
+    private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionController.class);
 
+    @ExceptionHandler(SQLException.class)
+    public String handleSQLException(HttpServletRequest request, Exception ex){
+        logger.info("SQLException Occured:: URL="+request.getRequestURL());
+        return "errors/database_error";
+    }
 
 
 
