@@ -16,6 +16,9 @@
 | POST          | /products/create               | create new Product                              |
 | GET           | /products                | retrieve all Products                           |
 | GET           | /products/:id            | retrieve a Product by :id                       |
+| GET           | /products/category/:category | retrieve a Product by :category |
+| GET           | /products/category/:name | retrieve a Product by :name |
+| GET           | /products/filter/:params | retrieve a Product by :params Sample URL: http://localhost:8080//products/filter/params;brands=Google;category=Tablet|
 | PUT           | /products/update/:id            | update a Product by :id                         |
 | DELETE        | /products/delete/:id            | delete a Product by :id                         |
 | DELETE        | /products                | delete all Products                             |
