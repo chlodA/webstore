@@ -21,10 +21,8 @@
 | GET           | /products/filter/:params | retrieve a Product by :params Sample URL: http://localhost:8080//products/filter/params;brands=Google;category=Tablet|
 | PUT           | /products/update/:id            | update a Product by :id                         |
 | DELETE        | /products/delete/:id            | delete a Product by :id                         |
-| DELETE        | /products                | delete all Products                             |
-| GET           | /products?description=[keyword]|find all Products which description contains keyword   |
 | GET           | /products?id=[productId]|find all Products which the Product Id   |
 
-###### Project is not finisched yet.
+###### Project is not finished yet.
 
 

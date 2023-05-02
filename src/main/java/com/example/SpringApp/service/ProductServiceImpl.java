@@ -26,7 +26,10 @@ public class ProductServiceImpl implements ProductService {
     public  Product update(Product product){
         return this.productRepository.save(product);
     }
-
+    @Override
+    public void deleteProductById(Long id) {
+        this.productRepository.deleteById(id);
+    }
     @Override
     public Product getProductById(Long id) {
         Optional< Product > optional = productRepository.findById(id);
@@ -50,9 +53,6 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findByCategoryAndManufacturer(category, manufacturer);
     }
 
-    @Override
-    public void deleteProductById(Long id) {
-        this.productRepository.deleteById(id);
-    }
+
 
 }
